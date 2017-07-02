@@ -7,75 +7,44 @@ import java.util.Scanner;
 
 class Stack
 {
-	char stackarray[];
-	int top;
+    int top;
+    char stackarray[];
 
     Stack(int len)
     {
-    	stackarray = new char[len];
-    	top=-1;
+        stackarray = new char(len);
+        top=-1;
     }
 
-    boolean isEmpty()
+    void push(char data)
     {
-    	return top==-1;
-    }
-
-
-    void push(char item)
-    {
-    		stackarray[++top]=item;
+        stackarray[++top]=data;
     }
 
     char pop()
     {
-    	return stackarray[top--];
+        return stackarray[top--];
     }
-}
+    boolean isEmpty()
+    {
+        return top==-1;
+    }
 
-class Balancingofsymbols
+}
+class BalancingofSymbols
 {
     public static void main(String[] args) 
     {
-        System.out.println("Enter string to balace");
+        System.out.println("Enter String to Balance");
         Scanner scan = new Scanner(System.in);
-        String s = scan.nextLine();
-        int len = s.length();
+        String symbol = scan.next();
+        int len = symbol.length();
         Stack thestack = new Stack(len);
+        int i=0;
 
-        for(int i=0;i<len;i++) 
+        while(i<len)
         {
-            char c = s.charAt(i);
-            if(c=='{' || c=='[' || c=='(')
-                thestack.push(c);
-            else
-            {
-                if(c=='}' || c==']' || c==')')
-                {
-                    if(thestack.isEmpty())
-                    {
-                        System.out.println("First Checking");
-                        System.out.println("You have entered an extra symbol at line "+i);
-                        break;
-                    }
-
-                    else if(c!=thestack.pop()) 
-                    {
-                        System.out.println("Second checking");
-                        System.out.println("You have entered a wrong symbol at line "+i);
-                        break;
-
-                    }
-
-                }
-            }
             
         }
-        if(!thestack.isEmpty())
-            System.out.println("Error");
-
-
-        
-    }
+    }   
 }
-
