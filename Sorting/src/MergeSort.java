@@ -1,4 +1,4 @@
-//Merge sort implementation in java considering ascceding order
+//Merge sort implementation in java considering ascceding order using recursive way
 //created by sachin mukherjee
 //sachinmukherjee29@gmail.com
 
