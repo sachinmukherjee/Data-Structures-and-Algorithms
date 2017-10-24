@@ -1,3 +1,20 @@
+/* To Check whether the given string has balanced symbols or not */
+/* Algorithm */
+/*
+ * Input a string which has to be checked whether the string is balanced or not
+-------------------LOOP STARTS------------------------------------------------------------
+ * run the loop untill the end of character
+   * if the character at current position is not any bracket then let it go and move forward
+   * if the character at current position is a opening bracket then push it into the stack
+   * if the character at given postion  is a closing bracket then 
+      * if stack is empty then "Error Mismatched Occurs"
+      * if it is closing bracket then match with its opening bracket 
+            * if it doesnot match then "Error Mismatched Occurs"
+------------------LOOP ENDS---------------------------------------------------------------
+ * if the stack is not empty then "Error occurs"
+
+*/
+
 import java.io.*;
 class BalancingOfSymbols
 {
