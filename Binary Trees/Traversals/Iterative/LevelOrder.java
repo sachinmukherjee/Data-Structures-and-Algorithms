@@ -53,18 +53,18 @@ class LevelOrder
 	{
 		Queue queue = new Queue();
 		Node temp;
-		if(root == null)
+		if(root == null)				// if tree is empty then return without processing further
 			return;
-		queue.enQueue(root);
+		queue.enQueue(root);			// push root into the queue
 		while(!queue.isEmpty())
 		{
-			temp = queue.deQueue();
-			System.out.println(temp.data);
+			temp = queue.deQueue();		// pop one node from queue
+			System.out.println(temp.data);	// display it
 			
-			if(temp.left != null)
+			if(temp.left != null)			// if it has left child then push it into queue
 				queue.enQueue(temp.left);
 			
-			if(temp.right != null)
+			if(temp.right != null)			// if it has right child then push it into queue
 				queue.enQueue(temp.right);
 		}
 	}

@@ -1,119 +1,126 @@
+/* Implementation of DepthFirstSearch using Adjacent Matrix*/
+
+//Stack class for tracking of last vertex
 class Stack
 {
-	int top;
-	int stackarray[] = new int[20];
+  final int SIZE = 30;
+  int[] st;
+  int top;
 
-	Stack()
-	{
-		top=-1;
-	}
+  Stack()
+  {
+    st = new int[SIZE];
+    top = -1;
+  }
 
-	void push(int element)
-	{
-		stackarray[++top]= element;
-	}
+  void push(int j)
+  {
+    st[++top] = j;
+  }
 
-	int pop()
-	{
-		return stackarray[top--];
-	}
+  int pop()
+  {
+    return st[top--];
+  }
 
-	int peek()
-	{
-		return stackarray[top];
-	}
-
-	boolean isEmpty()
-	{
-		return top ==-1;
-	}
+  int peek()
+  {
+    return st[top];
+  }
+  boolean isEmpty()
+  {
+    return top==-1;
+  }
 }
+
+// Vertex class for graph
 class Vertex
 {
-	char label;
-	boolean wasVisited;
+  char label;
+  boolean wasVisited;
 
-	Vertex(char label)
-	{
-		this.label = label;
-		wasVisited=false;
-	}
+  Vertex(char label)
+  {
+    this.label = label;
+    wasVisited = false;
+  }
 }
-
 class DepthFirstSearch
 {
-	static final int MAX_VERTEX=20;
-	int numVertex;
-	Vertex vertexlist[];
-	int adjMat[][];
+  final int MAX_VERTEX = 30;          // Number of vertex in Graph
+  Vertex vertexlist[] = new Vertex[30];   // array for holding vertex
+  int adjMat[][];                   // for filling edges in that connects vertex
+  int nVertex;                      // keep tracking number of vertex
+  Stack thestack;
 
-	DepthFirstSearch()
-	{
-		vertexlist = new Vertex[MAX_VERTEX];
-		adjMat = new int[MAX_VERTEX][MAX_VERTEX];
-	}
+  DepthFirstSearch()
+  {
+    adjMat = new int[30][30];
+    nVertex = 0;
+    thestack = new Stack();
+    for(int i=0; i<MAX_VERTEX; i++)
+        for(int j=0; j<MAX_VERTEX; j++)
+            adjMat[i][j] = 0;
+  }
 
-	void addVertex(char label)
-	{
-		vertexlist[numVertex++] = new Vertex(label);
-		
-	}
+  void addVertex(char lab)
+  {
+    vertexlist[nVertex++] = new Vertex(lab);  // adding vertex in array
+  }
+  void addEdge(int start, int end)
+  {
+    adjMat[start][end] = 1;           // connecting each vertex together
+    adjMat[end][start] = 1;
+  }
 
-	void addEdge(int start, int end)
-	{
-		adjMat[start][end]=1;
-		adjMat[end][start]=1;
-	}
+  void displayVertex(int v)
+  {
+    System.out.println(vertexlist[v].label);
+  }
+  int getAdjUnvisitedVertex(int v)
+  {
+    for(int j=0; j<MAX_VERTEX; j++)
+        if(adjMat[v][j]==1 && vertexlist[j].wasVisited==false)      //it that vertex has unvisited vertex
+            return j;   // then return that vetex
+        return -1;
+  }
 
-	void displayVertex(int vertex)
-	{
-		System.out.println(vertexlist[vertex].label);
-	}
+  void depthFirstSearch()
+  {
+    vertexlist[0].wasVisited = true; // start from first, mark it as visited
+    displayVertex(0);     // display it
+    thestack.push(0);     // push it into stack
 
-	int getAdjVertex(int v)
-	{
-		for(int i=0;i<numVertex;i++)
-			if(adjMat[v][i]==1 && vertexlist[i].wasVisited==false)
-				return i;
-			else
-				return -1;
-	}
+    while( !thestack.isEmpty())  // process unitll all vertex are processed i.e stack is not empty
+    {
+        int v = getAdjUnvisitedVertex(thestack.peek());   //take the vetex from top and find if it has unvisited vertex
+        if(v ==-1)    // if it doesnot have then remove it
+            thestack.pop();
+        else
+        {
+          vertexlist[v].wasVisited=true;     //else mark it as visited
+          displayVertex(v);                   //display it
+          thestack.push(v);                   //push it into stack
+        }
+    }
+  }
 
-	void depthFirstSearch()
-	{
-		vertexlist[0].wasVisited=true;							//start from first vertex
-		displayVertex(0);										// display it
-		Stack thestack = new Stack();							
-		thestack.push(0);										// push it into stack
+  public static void main(String args[])
+  {
+    DepthFirstSearch graph = new DepthFirstSearch();
+    graph.addVertex('A');
+    graph.addVertex('B');
+    graph.addVertex('C');
+    graph.addVertex('D');
+    graph.addVertex('E');
 
-		while(!thestack.isEmpty())								// process untill the stack is empty
-		{
-			int v = getAdjVertex(thestack.peek());				// get unvisited vertex of the top element of the stack
-			if(v==-1)											// if it returns -1 means it already visited or no adjacent vertex
-				thestack.pop();									// so remove the top most element of the stack
-			else 
-			{
-				vertexlist[v].wasVisited=true;					// else mark it as visited
-				displayVertex(v);								// display it
-				thestack.push(v);								// push it into the stack
-			}
-
-
-		}
-
-	}
-
-
-	public static void main(String[] args) 
-	{
-		DepthFirstSearch depth = new DepthFirstSearch();
-		depth.addVertex('A');
-		depth.addVertex('B');
-		depth.addVertex('C');
-		depth.addEdge(1,2);
-		depth.addEdge(2,3);
-		depth.displayVertex(1);		
-	}
+    graph.addEdge(0,1);
+    graph.addEdge(1,2);
+    graph.addEdge(0,3);
+    graph.addEdge(3,4);
+    System.out.println("Calling depthFirstSearch");
+    graph.depthFirstSearch();
+  }
 
 
 }
