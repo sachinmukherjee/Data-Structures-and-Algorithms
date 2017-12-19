@@ -2,22 +2,22 @@ import java.util.*;
 
 class Vertex implements Comparable<Vertex>
 {
-	public final String name;
-	public ArrayList<Edge> neighbours;
-	public LinkedList<Vertex> path;
-	public double minDistance = Double.POSITIVE_INFINITY;
-	public Vertex previous;
+	public final String name;						// Name of vertex
+	public ArrayList<Edge> neighbours;				// Neighbours of vertex
+	public LinkedList<Vertex> path;					// path of vertex
+	public double minDistance = Double.POSITIVE_INFINITY;		//maximum distance
+	public Vertex previous;							//previous vertex
 
 	public int compareTo(Vertex other)
 	{
-		return Double.compare(minDistance, other.minDistance);
+		return Double.compare(minDistance, other.minDistance);	// comparing distance of two vertex
 	}
 
-	public Vertex(String name)
+	public Vertex(String name)				// creating vertex
 	{
-		this.name = name;
-		neighbours = new ArrayList<Edge>();
-		path = new LinkedList<Vertex>();
+		this.name = name;					//name
+		neighbours = new ArrayList<Edge>();	// neighbours
+		path = new LinkedList<Vertex>();	// path
 	}
 
 	public String toString()
@@ -28,8 +28,9 @@ class Vertex implements Comparable<Vertex>
 
 class Edge
 {
-	public final Vertex target;
-	public final double weight;
+	public final Vertex target;					// target node
+	public final double weight;					// distance between source and node
+	
 	public Edge(Vertex target, double weight)
 	{
 		this.target = target;
@@ -40,6 +41,7 @@ class Edge
 class Graph
 {
 	private ArrayList<Vertex> vertices;
+	
 	public Graph(int numberVertices)
 	{
 		vertices = new ArrayList<Vertex>(numberVertices);
@@ -52,10 +54,11 @@ class Graph
 	public void addEdge(int src, int dest, int weight)
 	{
 		Vertex s = vertices.get(src);
-		Edge new_edge = new Edge(vertices.get(dest), weight);
+		Edge new_edge = new Edge(vertices.get(dest), weight);			//vertices.get is the returning vertex from arraylist
 		s.neighbours.add(new_edge);
 	}
 
+	// returning the arraylist of vertex that we declared int the Graph Class
 	public ArrayList<Vertex> getVertices()
 	{
 		return vertices;
@@ -104,7 +107,7 @@ public class Dijkastra
 
 		obj.calculate(g.getVertex(0));
 
-		for(Vertex v: g.getVertices())
+		for(Vertex v: g.getVertices())				//all the vertices object
 		{
 			System.out.print("Vertex - "+v+" , Dist - "+v.minDistance+" , Path - ");
 			for(Vertex pathvert: v.path)
